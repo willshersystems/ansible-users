@@ -1,0 +1,8 @@
+---
+- name: SSH keys
+  authorized_key: >
+    user='{{ item.0.user }}'
+    key='{{ item.1 }}'
+  with_subelements:
+    - ssh_keys
+    - keys
