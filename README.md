@@ -20,7 +20,8 @@ ssh_keys
 
 
 
-Usage-----
+Usage
+-----
 
 Adding users:
 
@@ -43,6 +44,6 @@ users:
 
 ssh_keys:
 - user: bob
-keys:
-- 'ssh-rsa  AAAAB3... bob'
+  keys:
+  - 'ssh-rsa  AAAAB3... bob'
 ```
