@@ -1,32 +1,15 @@
 ---
-- name: Create group with no GID
-  group: >
-    name='{{item.name}}'
-    state='{{item.state | default("present")}}'
+- name: Create groups
+  group:
+    name: '{{ item.name }}'
+    state: '{{ item.state | default("present") }}'
+    gid: '{{ item.gid | default (omit) }}'
   with_items: users_groups
-  when: item.gid is not defined
 
-- name: Create group with GID
-  group: >
-    name='{{item.name}}'
-    state='{{item.state | default("present")}}'
-    gid='{{item.gid}}'
-  with_items: users_groups
-  when: item.gid is defined
-
-- name: Create users groups with no GID
-  group: >
-    name='{{ item.name }}'
-    state='{{item.state | default("present")}}'
+- name: Create per-user groups
+  group:
+    name: '{{ item.name }}'
+    state: '{{ item.state | default("present") }}'
+    gid: '{{ item.gid | default(item.uid) | default(omit) }}'
   with_items: users
-  when: (item.uid is not defined and item.gid is not defined) and
-        (item.group is not defined)
-
-- name: Create users groups with GID
-  group: >
-    name='{{ item.name }}'
-    state='{{item.state | default("present")}}'
-    gid='{{ item.gid | default(item.uid) }}'
-  with_items: users
-  when: (item.gid is defined or item.uid is defined) and
-        (item.group is not defined)
+  when: users_per_user_groups == true
