@@ -2,10 +2,12 @@
 - name: Load OS specific values
   include_vars: "{{ ansible_os_family }}.yml"
 
-- include: groups.yaml
+- include: add_groups.yml
 
-- include: users.yaml
+- include: users.yml
 
-- include: ssh.yaml
+- include: remove_groups.yml
 
-- include: sudo.yaml
+- include: ssh_keys.yml
+
+- include: sudo.yml

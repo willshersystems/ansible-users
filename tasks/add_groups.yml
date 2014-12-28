@@ -1,0 +1,17 @@
+---
+- name: Create groups
+  group:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    gid: "{{ item.gid | default (omit) }}"
+  with_items: users_groups
+  when: item.state != "absent"
+
+- name: Create per-user groups
+  group:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    gid: "{{ item.gid | default(item.uid) | default(omit) }}"
+  with_items: users
+  when: users_per_user_groups == true and item.state != "absent"
+

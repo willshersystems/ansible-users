@@ -1,0 +1,15 @@
+---
+- name: Remove group
+  group:
+    name: "{{ item.name }}"
+    state: absent
+  with_items: users_groups
+  when: item.state == "absent"
+
+- name: Remove per-user groups
+  group:
+    name: "{{ item.name }}"
+    state: absent
+  with_items: users
+  when: users_per_user_groups == true and item.state == "absent"
+
