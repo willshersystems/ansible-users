@@ -7,6 +7,9 @@ users_create_homedirs: yes
 # Create groups for users with the same name as the users group
 users_per_user_groups: yes
 
+users_admin_group: wheel
+users_default_password: '!!'
+
 # Lists of users to create and delete
 users: []
 users_groups: []

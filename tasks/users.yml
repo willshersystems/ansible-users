@@ -13,6 +13,9 @@
     createhome: '{{ users_create_homedirs }}'
     append: yes
   with_items: users
+  when: >
+    not ( item.name == ansible_ssh_user and
+    item.state|default('present') == 'absent' )
 
 - name: Add admin users to admin group
   user:
@@ -21,4 +24,6 @@
     groups: '{{ users_admin_group }}'
     append: yes
   with_items: users
-  when: item.is_admin is defined and item.is_admin == true
+  when: >
+    item.is_admin is defined and
+    item.is_admin == true
