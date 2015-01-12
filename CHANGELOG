@@ -1,4 +1,4 @@
-0.2.0
 * Set allow_duplicates to yes in the meta data
+* createhome can be set per-user
 0.1.0 15 January 2015 Matt Willsher <matt@willsher.systems>
 * Initial release

@@ -10,7 +10,7 @@
     comment: '{{ item.comment | default("Unknown User") }}'
     password: '{{ item.password | default(users_default_password) }}'
     home: '{{ item.home | default("/home/"+item.name) }}'
-    createhome: '{{ users_create_homedirs }}'
+    createhome: '{{ item.createhome|default(users_create_homedirs) }}'
     system: '{{ item.system | default(omit) }}'
     append: yes
   with_items: users
