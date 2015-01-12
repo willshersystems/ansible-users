@@ -96,7 +96,7 @@ users_groups:
 
 ### SSH Keys
 
-* user_ssh_keys
+* users_ssh_keys
 
 A list of users, each containing a key with a list of public SSH keys as its
 value.
@@ -181,7 +181,7 @@ Example Playbook
       state: absent
     users_groups:
     - name: beancounters
-    ssh_keys:
+    users_ssh_keys:
     - name: carl
       keys:
       - ssh-rsa AAAA....... carl@accounts.example.com
