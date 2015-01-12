@@ -1,3 +1,5 @@
+0.1.2 12 January 2015 Matt Willsher <matt@willsher.systems>
+* Add Travis tests 
 0.1.1 12 January 2015 Matt Willsher <matt@willsher.systems>
 * Set allow_duplicates to yes in the meta data
 * createhome can be set per-user
