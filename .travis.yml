@@ -1,0 +1,38 @@
+---
+language: python
+python: "2.7"
+
+before_install:
+  # Make sure everything's up to date.
+  - sudo apt-get update -qq
+
+install:
+  # Install Ansible.
+  - pip install ansible
+
+  # Add ansible.cfg to pick up roles path.
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
+
+script:
+  # Check the roles syntax
+  - "ansible-playbook -i tests/inventory tests/test.yml --syntax-check"
+
+  # Run the role
+  - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo"
+
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Tests user is correct
+  - id testuser1 | grep 'uid=1010(testuser1) gid=1010(testuser1) groups=1010(testuser1),27(sudo),998(testgroup1),1011(testgroup2)'
+  - id testuser2 | grep 'uid=999(testuser2) gid=998(testgroup1) groups=998(testgroup1)'
+  # Test for home directories
+  - test -d /home/testuser1
+  - test ! -d /home/testuser2
+  # Check ssh key
+  - sudo grep 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQDPP/lgoFiuniGtCgmEXuwxmpeimWKoyAGgrHOaTfhnSBiIiDmh2pA3eNlm+iMk9tg103RDKMk4iWmsxlllormmdvAIy7P9L7oobuxtPAOQHqXr1zHwH3sbi2u3RQKmoxs= testkey' /home/testuser1/.ssh/authorized_keys

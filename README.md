@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/WillsherSystems/ansible-users.svg?branch=master)](https://travis-ci.org/WillsherSystems/ansible-sshd) [![Ansible Galaxy](http://img.shields.io/badge/galaxy-willshersystems.users-660198.svg?style=flat)](https://galaxy.ansible.com/list#/roles/2562)
+
 User management
 ===============
 
@@ -94,7 +96,7 @@ users_groups:
 
 ### SSH Keys
 
-* user_ssh_keys
+* users_ssh_keys
 
 A list of users, each containing a key with a list of public SSH keys as its
 value.
@@ -179,7 +181,7 @@ Example Playbook
       state: absent
     users_groups:
     - name: beancounters
-    ssh_keys:
+    users_ssh_keys:
     - name: carl
       keys:
       - ssh-rsa AAAA....... carl@accounts.example.com

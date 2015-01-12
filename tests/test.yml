@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  remote_user: root
+  vars:
+    users:
+    - name: testuser1
+      comment: 'Test User'
+      is_admin: true
+      uid: 1010
+      groups:
+      - testgroup1
+      - testgroup2
+    - name: testuser2
+      uid: 999
+      createhome: false
+      group: testgroup1
+    users_groups:
+    - name: testgroup1
+      gid: 998
+      system: true
+    - name: testgroup2
+      gid: 1011
+    users_ssh_keys:
+    - name: testuser1
+      keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQDPP/lgoFiuniGtCgmEXuwxmpeimWKoyAGgrHOaTfhnSBiIiDmh2pA3eNlm+iMk9tg103RDKMk4iWmsxlllormmdvAIy7P9L7oobuxtPAOQHqXr1zHwH3sbi2u3RQKmoxs= testkey
+  roles:
+  - ansible-users
+
