@@ -1,1 +1,4 @@
-%{{ users_admin_group }} ALL = (ALL) ALL
+{% if users_admin_uses_ansible == true %}
+Defaults:%{{ users_admin_group }} !requiretty
+{% endif %}
+%{{ users_admin_group }} ALL = (ALL) {{ 'NOPASSWD:' if not users_admin_sudo_password else '' }} ALL

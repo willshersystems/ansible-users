@@ -6,6 +6,13 @@ users_default_shell: /bin/bash
 users_create_homedirs: yes
 # Create groups for users with the same name as the users group
 users_per_user_groups: yes
+# If true, create a sudoers entry for the admin group allow root access.
+users_manage_admin_sudoers: yes
+# If true, assume the admin group is also used to run Ansible jobs. This
+# disables requiretty for the admin group
+users_admin_uses_ansible: yes
+# If set to true, require a password for sudo, false to not require a password
+users_admin_sudo_password: yes
 
 users_admin_group: wheel
 users_default_password: '!!'
@@ -13,4 +20,4 @@ users_default_password: '!!'
 # Lists of users to create and delete
 users: []
 users_groups: []
-ssh_keys: []
+user_ssh_keys: []

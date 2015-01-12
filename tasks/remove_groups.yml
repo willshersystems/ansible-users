@@ -4,7 +4,7 @@
     name: "{{ item.name }}"
     state: absent
   with_items: users_groups
-  when: item.state == "absent"
+  when: item.state|default('present') == "absent"
 
 - name: Remove per-user groups
   group:
