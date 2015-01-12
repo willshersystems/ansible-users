@@ -1,2 +1,3 @@
 ---
 users_admin_group: wheel
+users_default_password: '!!'

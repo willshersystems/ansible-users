@@ -1,49 +1,198 @@
-users role
-==========
+User management
+===============
 
-User creation role that allow flexible user management from a set of hashes.
+Configure users, group, SSH keys and administrative sudo access. The role can:
 
-Role configuration variables
-----------------------------
+* Add and remove groups
+* Add and remove users
+* Install SSH keys for users
+* Configure sudo to allow root access for the administration group
 
-* users_default_shell (default: /bin/bash) - the default shell if none is
-  specified for the user.
-* users_create_homedirs (default: true) - create home directories for new
-  users. Set this to false is you manage home directories separately.
+Requirements
+------------
 
-Data variables
+Tested on:
+
+* Ubuntu 14.04 LTS
+
+Should work with:
+
+* All Ubuntu
+* All Debian
+* All EL 6,7 based distros
+
+Role Variables
 --------------
 
-users
-users_groups
-ssh_keys
+### Users
 
+* users
 
+A list containing dictionaries of configuration. Each list item can have the
+following elements. *Italic text* indicates the default.
 
-Usage
------
+  * name **required**
+  * state (*present*)
+  * uid
+  * group (*item.name*)
+  * groups
+  * shell (*{{ users_default_shell }}*)
+  * comment (*Unknown user*)
+  * password (*{{ users_default_password }}*)
+  * home (*/home/{{item.name}}*)
+  * createhome (*{{ users_create_homedirs }}*)
+  * system
+  * is_admin
 
-Adding users:
+*users_default_password* is set to watching the default password is for new
+accounts for the given OS, e.g. !!
+
+All other variable defaults are given below.
+
+*is_admin* is a boolean. If set, the user is added to the OSs admin group.
+
+All other items correspond to the ansible users module parameters.
+
+#### Example
 
 ```yaml
-users_groups:
-- name: testgroup
-
 users:
 - name: alice
   comment: Alice
-  is_admin: true
-  password: '$6$.smI.....'
+  password: '$6$hE1TkH.X$F9flUhXGiL8zI4lOioqp1FxN8L8HrMbuP4ZFVbv5MnyeQFAhIAsbTmT6t7.p93FgyiJo3U/aJeiGHzCTUvA.s.'
+  is_admin: yes
+  groups:
+    - devs
+    - mgmt
 - name: bob
-  comment: Bob
-  uid: 555
-  is_admin: false
-  group: testgroup
-- name: claire
   state: absent
-
-ssh_keys:
-- user: bob
-  keys:
-  - 'ssh-rsa  AAAAB3... bob'
 ```
+
+### Groups
+
+* users_groups
+
+A list of user groups to create. Each list item can have the following elements.
+*Italic text* indicates the default.
+
+  * name **required**
+  * state (*present*)
+  * system
+  * gid
+
+#### Example
+  
+```yaml
+users_groups:
+- name: devs
+  gid: 1000
+- name: mgmt
+  gid: 2000
+- name: hr
+  state: absent
+```
+
+### SSH Keys
+
+* user_ssh_keys
+
+A list of users, each containing a key with a list of public SSH keys as its
+value.
+
+  * name
+  * keys
+
+name is the username.
+
+keys is a list of public SSH keys.
+
+#### Example
+
+```yaml
+users_ssh_keys:
+- name: alice
+  keys:
+    - ssh-rsa AAAA..... alice@somewhere.com
+    - ssh-rsa AAAA..... alice@elsewhere.com
+- name: bob
+  keys:
+    - ssh-rsa AAAA.... bob@somewhere.com
+```
+
+### Tuning onfiguration
+
+* users_default_shell
+
+The default shell for a user if none is specified. Defaults to `/bin/bash`
+
+* users_create_homedirs
+
+Create home dirs for new users? Set this to false if you manage home directories
+in some other way. Defaults to *true*.
+
+* users_per_user_groups
+
+Create groups for users with the same name as the users group. Defaults to
+*true*
+
+### Sudo configuration
+
+* users_manage_admin_sudoers
+
+If true, create sudo configuration to allow users in the admin group to become
+root via sudo. Defaults to *true*
+
+* users_admin_uses_ansible
+
+If true, assume the admin group is also used to run Ansible jobs. This disables
+requiretty for the admin group in the sudoers configuration. Defaults to *true*
+
+* users_admin_sudo_password
+
+If true require a password for sudo, false to not require a password. Defaults
+to *true*
+
+Dependencies
+------------
+
+None
+
+Example Playbook
+----------------
+
+```yaml
+---
+- hosts: all
+  sudo: true
+  vars:
+    users_admin_sudo_password: false
+  roles:
+  - role: willshersystems.users
+    users:
+    - name: carl
+      uid: 1010
+      comment: 'Carl Crisp'
+      is_admin: yes
+      groups:
+      - beancounters
+    - name: ec_user
+      state: absent
+    users_groups:
+    - name: beancounters
+    ssh_keys:
+    - name: carl
+      keys:
+      - ssh-rsa AAAA....... carl@accounts.example.com
+```
+
+License
+-------
+
+LGPLv3
+
+Author Information
+------------------
+
+Matt Willsher, matt@willsher.systems
+
+(c)2015 Willsher Systems
