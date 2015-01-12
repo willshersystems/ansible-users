@@ -1,4 +1,5 @@
-0.1.2 12 January 2015 Matt Willsher <matt@willsher.systems>
+0.2.0 12 January 2015 Matt Willsher <matt@willsher.systems>
+* Fix naming issue for users_ssh_keys and correct documentation
 * Add Travis tests 
 0.1.1 12 January 2015 Matt Willsher <matt@willsher.systems>
 * Set allow_duplicates to yes in the meta data
