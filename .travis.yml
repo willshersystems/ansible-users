@@ -29,8 +29,8 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Tests user is correct
-  - id testuser1
-  - id testuser2
+  - id testuser1 | grep 'uid=1010(testuser1) gid=1010(testuser1) groups=1010(testuser1),27(sudo),998(testgroup1),1011(testgroup2)'
+  - id testuser2 | grep 'uid=999(testuser2) gid=998(testgroup1) groups=998(testgroup1)'
   # Test for home directories
   - test -d /home/testuser1
   - test ! -d /home/testuser2
