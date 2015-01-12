@@ -1,6 +1,21 @@
 ---
 - hosts: localhost
   remote_user: root
+  vars:
+    users:
+    - name: testuser1
+      comment: 'Test User'
+      is_admin: true
+      groups:
+      - testgroup1
+      - testgroup2
+    - name: testuser2
+      createhome: false
+      group: testgroup1
+    users_groups:
+    - name: testgroup1
+      system: true
+    - name: testgroup2
   roles:
   - ansible-users
 
