@@ -28,7 +28,12 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  - id testuser1
-  - id testuser2
-  - test ! -d /home/testuser2 
+  # Tests user is correct
+  - id testuser1 | grep 'uid=1003(testuser1) gid=1004(testuser1) groups=1004(testuser1),27(sudo),999(testgroup1),1003(testgroup2)'
+  - id testuser2 | grep 'gid=999(testgroup1) groups=999(testgroup1)'
+  # Test for home directories
+  - test -d /home/testuser1
+  - test ! -d /home/testuser2
+  # Check ssh key
+  - grep 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAYQDPP/lgoFiuniGtCgmEXuwxmpeimWKoyAGgrHOaTfhnSBiIiDmh2pA3eNlm+iMk9tg103RDKMk4iWmsxlllormmdvAIy7P9L7oobuxtPAOQHqXr1zHwH3sbi2u3RQKmoxs= testkey' /home/testuser1/.ssh/authorized_keys
 
