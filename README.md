@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/willshersystems/ansible-users.svg?branch=master)](https://travis-ci.org/WillsherSystems/ansible-sshd) [![Ansible Galaxy](http://img.shields.io/badge/galaxy-willshersystems.users-660198.svg?style=flat)](https://galaxy.ansible.com/list#/roles/2562)
+[![Build Status](https://travis-ci.org/willshersystems/ansible-users.svg?branch=master)](https://travis-ci.org/willshersystems/ansible-users)
+[![Ansible Galaxy](http://img.shields.io/badge/galaxy-willshersystems.users-660198.svg?style=flat)](https://galaxy.ansible.com/list#/roles/2562)
 
 User management
 ===============
