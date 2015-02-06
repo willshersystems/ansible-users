@@ -121,7 +121,7 @@ users_ssh_keys:
     - ssh-rsa AAAA.... bob@somewhere.com
 ```
 
-### Tuning onfiguration
+### Tuning Configuration
 
 * users_default_shell
 
