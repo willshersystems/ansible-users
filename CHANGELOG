@@ -1,4 +1,5 @@
-0.2.1 04 March 2015 Matt Willsher <matt@willsher.systems>
+
+0.2.2 04 March 2015 Matt Willsher <matt@willsher.systems>
 * Travis and doc typo fixes
 0.2.0 12 January 2015 Matt Willsher <matt@willsher.systems>
 * Fix naming issue for users_ssh_keys and correct documentation
