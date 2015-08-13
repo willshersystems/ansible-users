@@ -20,4 +20,4 @@ users_default_password: '!!'
 # Lists of users to create and delete
 users: []
 users_groups: []
-user_ssh_keys: []
+users_ssh_keys: []
