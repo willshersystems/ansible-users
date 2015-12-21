@@ -1,4 +1,11 @@
 ---
+
+- assert: "{{ item.name }} is the current Ansible SSH User. Will not remove."
+  with_items: users
+  when: >
+    ( item.name == ansible_ssh_user and
+    item.state|default('present') == 'absent' )
+
 - name: Create users
   user:
     name: '{{ item.name }}'
