@@ -1,17 +1,23 @@
 ---
-- name: Load OS specific values
+- name: Load operating system specific variable values
   include_vars: "{{ ansible_os_family }}.yml"
   with_first_found:
    - "{{ ansible_distribution }}.yml"
    - "{{ ansible_os_family }}.yml"
    - default.yml
 
-- include: add_groups.yml
+- name: Add defined users_groups and per-user groups
+  include: add_groups.yml
 
-- include: users.yml
+- name: Create, modify, delete users
+  include: users.yml
 
-- include: remove_groups.yml
+- name: Remove users_groups marked absent and per-user groups for deleted users
+  include: remove_groups.yml
 
-- include: ssh_keys.yml
+- name: Install ssh keys for users with users_ssh_keys defined
+  include: ssh_keys.yml
 
-- include: sudo.yml
+- name: Configure administrator access for users for which is_admin is set
+  include: sudo.yml
+  when: users_manage_admin_sudoers == true

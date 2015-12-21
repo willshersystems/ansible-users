@@ -1,5 +1,5 @@
 ---
-- name: Create groups
+- name: Create defined users_groups
   group:
     name: "{{ item.name }}"
     state: "{{ item.state | default('present') }}"
@@ -8,7 +8,7 @@
   with_items: users_groups
   when: item.state|default('present') != "absent"
 
-- name: Create per-user groups
+- name: Create per-user groups for each user
   group:
     name: "{{ item.name }}"
     state: "{{ item.state | default('present') }}"

@@ -1,12 +1,12 @@
 ---
-- name: Remove group
+- name: Remove users_groups marked absent
   group:
     name: "{{ item.name }}"
     state: absent
   with_items: users_groups
   when: item.state|default('present') == "absent"
 
-- name: Remove per-user groups
+- name: Remove per-user groups for removed users
   group:
     name: "{{ item.name }}"
     state: absent

@@ -1,5 +1,5 @@
 ---
-- name: SSH keys
+- name: Install authorized_keys for users with users_ssh_keys defined
   authorized_key: >
     user='{{ item.0.name }}'
     key='{{ item.1 }}'
