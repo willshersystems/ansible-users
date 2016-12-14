@@ -13,7 +13,7 @@
     createhome: '{{ item.createhome|default(users_create_homedirs) }}'
     system: '{{ item.system | default(omit) }}'
     append: yes
-  with_items: users
+  with_items: "{{ users }}"
   when: >
     not ( item.name == ansible_ssh_user and
     item.state|default('present') == 'absent' )
@@ -24,7 +24,7 @@
     state: '{{ item.state | default("present") }}'
     groups: '{{ users_admin_group }}'
     append: yes
-  with_items: users
+  with_items: "{{ users }}"
   when: >
     item.is_admin is defined and
     item.is_admin == true
