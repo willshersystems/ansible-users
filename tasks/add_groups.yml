@@ -5,7 +5,7 @@
     state: "{{ item.state | default('present') }}"
     gid: "{{ item.gid | default(omit) }}"
     system: "{{ item.system | default(omit) }}"
-  with_items: users_groups
+  with_items: "{{ users_groups }}"
   when: item.state|default('present') != "absent"
 
 - name: Create per-user groups
@@ -14,7 +14,7 @@
     state: "{{ item.state | default('present') }}"
     gid: "{{ item.gid | default(item.uid) | default(omit) }}"
     system: "{{ item.system | default(omit) }}"
-  with_items: users
+  with_items: "{{ users }}"
   when: >
     users_per_user_groups == true and
     item.state|default('present') != 'absent'
