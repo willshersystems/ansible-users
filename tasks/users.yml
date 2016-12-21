@@ -15,7 +15,7 @@
     append: yes
   with_items: "{{ users }}"
   when: >
-    not ( item.name == ansible_ssh_user and
+    not ( item.name == ansible_ssh_user|default(lookup('env', 'USER')) and
     item.state|default('present') == 'absent' )
 
 - name: Add admin users to admin group
