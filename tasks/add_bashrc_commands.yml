@@ -1,0 +1,9 @@
+---
+- name: Create bashrc commands
+  blockinfile:
+    path: /home/{{item.name}}/.bashrc
+    block: '{{ item.bashrc_commands }}'
+  with_items: "{{ users }}"
+  when: >
+    users_per_user_groups == true and
+    item.state|default('present') != 'absent'
