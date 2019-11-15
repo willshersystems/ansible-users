@@ -1,9 +1,8 @@
 ---
 - name: Sudo installed
-  action: >
-    {{ ansible_pkg_mgr }}
-    name='sudo'
-    state='installed'
+  package:
+    name: sudo
+    state: present
 
 - name: Admin sudoers
   template:
